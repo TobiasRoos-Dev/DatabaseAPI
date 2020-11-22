@@ -1,6 +1,16 @@
 # DatabaseAPI
 ## Usage
 
+#### Access data
+```
+hostname   = "hostname";
+port       = 3306;
+database   = "database";
+passwd     = "password";
+username   = "username";
+```
+
+#### Getting the singleton instance
 ```
 Database db = Database.getInstance();
 ```
