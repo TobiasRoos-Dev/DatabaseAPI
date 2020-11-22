@@ -96,16 +96,12 @@ public class Database {
      * @param zusatzangaben
      * @return SQL Query
      */
-    protected String build_delete_statement(String tabellen, String einschraenkungen, String zusatzangaben) {
+    protected String build_delete_statement(String tabellen, String einschraenkungen) {
         if (einschraenkungen == null) einschraenkungen = "";
-        if (zusatzangaben == null) zusatzangaben = "";
 
         String sql_query = "DELETE FROM " + tabellen;
         if (einschraenkungen != "") {
             sql_query += " WHERE " + einschraenkungen;
-        }
-        if (zusatzangaben != "") {
-            sql_query += " " + zusatzangaben;
         }
         return sql_query;
     }
@@ -136,16 +132,12 @@ public class Database {
      * @param zusatzangaben
      * @return SQL Query
      */
-    protected String build_update_statement(String was, String tabellen, String einschraenkungen, String zusatzangaben) {
+    protected String build_update_statement(String was, String tabellen, String einschraenkungen) {
         if (einschraenkungen == null) einschraenkungen = "";
-        if (zusatzangaben == null) zusatzangaben = "";
 
         String sql_query = "UPDATE " + tabellen + " SET " + was + " ";
         if (einschraenkungen != "") {
             sql_query += " WHERE " + einschraenkungen;
-        }
-        if (zusatzangaben != "") {
-            sql_query += " " + zusatzangaben;
         }
         return sql_query;
     }
@@ -159,12 +151,12 @@ public class Database {
      * @return boolean success
      * @throws SQLException
      */
-    public static boolean delete(String tabellen, String einschraenkungen, Object[] vars, String zusatzangaben) throws SQLException {
+    public boolean delete(String tabellen, String einschraenkungen, Object[] vars) throws SQLException {
         if (vars == null) {
             vars = new Object[]{};
         }
         Database db = Database.getInstance();
-        String query = db.build_delete_statement(tabellen, einschraenkungen, zusatzangaben);
+        String query = db.build_delete_statement(tabellen, einschraenkungen);
         PreparedStatement statement = db.preparePreparedStatement(db.getConnection().prepareStatement(query), vars);
         int rowCount = statement.executeUpdate();
         return rowCount > 0;
@@ -180,12 +172,12 @@ public class Database {
      * @return boolean success
      * @throws SQLException
      */
-    public static boolean update(String was, String tabellen, String einschraenkungen, Object[] vars, String zusatzangaben) throws SQLException {
+    public boolean update(String was, String tabellen, String einschraenkungen, Object[] vars) throws SQLException {
         if (vars == null) {
             vars = new Object[]{};
         }
         Database db = Database.getInstance();
-        String query = db.build_update_statement(was, tabellen, einschraenkungen, zusatzangaben);
+        String query = db.build_update_statement(was, tabellen, einschraenkungen);
         PreparedStatement statement = db.preparePreparedStatement(db.getConnection().prepareStatement(query), vars);
         int rowCount = statement.executeUpdate();
         return rowCount > 0;
@@ -199,7 +191,7 @@ public class Database {
      * @return boolean success
      * @throws SQLException
      */
-    public static boolean insert(String was, String tabellen, Object[] vars) throws SQLException {
+    public boolean insert(String was, String tabellen, Object[] vars) throws SQLException {
         if (vars == null) {
             vars = new Object[]{};
         }
@@ -220,7 +212,7 @@ public class Database {
      * @return Hashmap with key rownumber and value as ArrayList
      * @throws SQLException
      */
-    public static HashMap<Integer, ArrayList> select(String was, String tabellen, String einschraenkungen, Object[] vars, String zusatzangaben) throws SQLException {
+    public HashMap<Integer, ArrayList> select(String was, String tabellen, String einschraenkungen, Object[] vars, String zusatzangaben) throws SQLException {
         if (vars == null) {
             vars = new Object[]{};
         }
