@@ -1,4 +1,4 @@
-# db. API
+# DatabaseAPI
 ## Usage
 
 ```
