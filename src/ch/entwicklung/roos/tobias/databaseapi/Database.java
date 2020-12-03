@@ -8,22 +8,39 @@ public class Database {
 
     private static Database instance;
 
-    private final String hostname;
-    private final int port;
-    private final String database;
-    private final String passwd;
-    private final String username;
+    private String hostname;
+    private int port;
+    private String database;
+    private String passwd;
+    private String username;
     private Connection connection;
 
     private Database() {
-        hostname   = "hostname";
-        port       = 3306;
-        database   = "database";
-        passwd     = "password";
-        username   = "username";
 
+    }
+
+    /**
+     * Setting credentials
+     * @param hostname
+     * @param port
+     * @param database
+     * @param passwd
+     * @param username
+     */
+    public void set_credentials(String hostname, int port, String database, String passwd,  String username) {
+        this.hostname = hostname;
+        this.port = port;
+        this.database = database;
+        this.passwd = passwd;
+        this.username = username;
+    }
+
+    /**
+     * Connection to database
+     */
+    public void connect() {
         try {
-            openConnection();
+            Database.instance.openConnection();
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
@@ -93,7 +110,6 @@ public class Database {
      * Builds delete statement
      * @param tabellen
      * @param einschraenkungen
-     * @param zusatzangaben
      * @return SQL Query
      */
     protected String build_delete_statement(String tabellen, String einschraenkungen) {
@@ -129,7 +145,6 @@ public class Database {
      * @param was
      * @param tabellen
      * @param einschraenkungen
-     * @param zusatzangaben
      * @return SQL Query
      */
     protected String build_update_statement(String was, String tabellen, String einschraenkungen) {
@@ -147,7 +162,6 @@ public class Database {
      * @param tabellen
      * @param einschraenkungen
      * @param vars
-     * @param zusatzangaben
      * @return boolean success
      * @throws SQLException
      */
@@ -168,7 +182,6 @@ public class Database {
      * @param tabellen
      * @param einschraenkungen
      * @param vars
-     * @param zusatzangaben
      * @return boolean success
      * @throws SQLException
      */

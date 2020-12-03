@@ -1,18 +1,26 @@
 # DatabaseAPI
 ## Usage
 
+### Use DatabaseAPI
 #### Access data
 ```
-hostname   = "hostname";
-port       = 3306;
-database   = "database";
-passwd     = "password";
-username   = "username";
+String hostname = "hostname";
+int port        = 3306;
+String database = "database";
+String password = "password";
+String username = "username";
+```
+#### Connect to Database
+```
+// First call (e.q. in main)
+Database db = Database.getInstance();
+db.set_credentials(hostname, port, database, password, username);
+db.connect();
 ```
 
-#### Getting the singleton instance
+#### Get instance of Database
 ```
-Database db = Database.getInstance();
+Database db = Datbase.getInstance();
 ```
 
 #### Select
